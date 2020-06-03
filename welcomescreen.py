@@ -63,6 +63,10 @@ class welcomescreen:
 
         info = pygame.display.Info()
         gameDisplay = pygame.display.get_surface()
+        w, h = gameDisplay.get_width() , gameDisplay.get_height()
+        scale_x = w / 1280.0
+        scale_y = h / 720.0
+
 
         if not(gameDisplay):
 
@@ -74,25 +78,26 @@ class welcomescreen:
             # pygame.display.set_icon(gameicon)
 
         fruit = pygame.image.load("images/welcomescreen/fruit.png")
-        fruit = pygame.transform.scale(fruit, (40, 40))
+        fruit = pygame.transform.scale(fruit, (int(40 * scale_x), int(40 * scale_y)))
 
         scoreplate = pygame.image.load("images/scoreplate.png").convert()
-        scoreplate = pygame.transform.scale(scoreplate, (40, 50))
+        scoreplate = pygame.transform.scale(scoreplate, (int(40 * scale_x), int(50 * scale_y)))
 
         scoreplate.set_alpha(100)
 
         play = pygame.image.load
 
         help = pygame.image.load("images/help.png")
-        help = pygame.transform.scale(help, (40, 40))
+        help = pygame.transform.scale(help, (int(40 * scale_x), int(40 * scale_y)))
 
         hero = pygame.image.load("images/hero.png")
-        hero = pygame.transform.scale(hero, (38, 38))
+        hero = pygame.transform.scale(hero, (int(38 * scale_x), int(38 * scale_y)))
 
         play = pygame.image.load("images/play.png")
-        play = pygame.transform.scale(play, (170, 170))
+        play = pygame.transform.scale(play, (int(170 * scale_x), int(170 * scale_y)))
 
         beta = pygame.image.load("images/alpha.png")
+        beta = pygame.transform.scale(beta, (int(105 * scale_x), int(248 * scale_y)))
 
         # herotr=hero
 
@@ -101,11 +106,11 @@ class welcomescreen:
         # hero1=pygame.image.load("images/hero1.png")
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 70
+        font_size = int(70 * scale_x)
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 15)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(15 * scale_x))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(40 * scale_x))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(20 * scale_x))
 
         down = 1
         bounce = 0
@@ -157,36 +162,36 @@ class welcomescreen:
                         down = 1
 
             gameDisplay.fill(white)
-            gameDisplay.blit(back, (350, 0))
+            gameDisplay.blit(back, ((350 + 45) * scale_x, 0))
 
             # scoreplate.set_alpha(20)
             # gameDisplay.blit(scoreplate,(540,40))
 
-            gameDisplay.blit(help, (380, 20))
+            gameDisplay.blit(help, ((380 + 45) * scale_x, 20 * scale_y))
             # score blitting
-            gameDisplay.blit(play, (510, 200 + bounce))
+            gameDisplay.blit(play, ((510 + 45) * scale_x, (200 + bounce) * scale_y))
 
-            gameDisplay.blit(beta, (540, 470))
+            gameDisplay.blit(beta, ((540 + 45) * scale_x, 470 * scale_y))
 
-            gameDisplay.blit(hero, (568, 432))
+            gameDisplay.blit(hero, ((568 + 45) * scale_x, 432 * scale_y))
 
             # score check
 
-            if fruit.get_rect(center=(790 + 20, 20 + 20)).collidepoint(mos_x, mos_y):
+            if fruit.get_rect(center=((790 + 20 + 45) * scale_x, (20 + 20) * scale_y)).collidepoint(mos_x, mos_y):
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
-                    gameDisplay.blit(scoreplate, (780, 40))
+                    gameDisplay.blit(scoreplate, ((780 + 45) * scale_x, 40 * scale_y))
                     # gameDisplay.blit(scoreplate,(780,60))
 
                     head1 = font2.render(_(str(fruitmaxscore)), 1, (white))
-                    gameDisplay.blit(head1, (785, 60))
+                    gameDisplay.blit(head1, ((785 + 45) * scale_x, 60 * scale_y))
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     press = 0
 
             # GAME START
 
-            if play.get_rect(center=(510 + 85, 200 + bounce + 85)).collidepoint(mos_x, mos_y):
+            if play.get_rect(center=((510 + 85 + 45) * scale_x, (200 + bounce + 85) * scale_y)).collidepoint(mos_x, mos_y):
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
                     return 2
@@ -199,7 +204,7 @@ class welcomescreen:
 
             # Help menu
 
-            if help.get_rect(center=(380 + 20, 20 + 20)).collidepoint(mos_x, mos_y):
+            if help.get_rect(center=((380 + 20 + 45) * scale_x, (20 + 20) * scale_y)).collidepoint(mos_x, mos_y):
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
                     a = rulescreen()
@@ -214,22 +219,22 @@ class welcomescreen:
                     press=0
                 '''
 
-            gameDisplay.blit(fruit, (780, 20))
+            gameDisplay.blit(fruit, ((780 + 45) * scale_x, 20 * scale_y))
 
             head1 = font1.render(_("STICK"), 1, (black))
-            gameDisplay.blit(head1, (500, 20))
+            gameDisplay.blit(head1, ((500 + 45) * scale_x, 20 * scale_y))
 
             head2 = font1.render(_("HERO"), 1, (black))
-            gameDisplay.blit(head2, (510, 80))
+            gameDisplay.blit(head2, ((510 + 45) * scale_x, 80 * scale_y))
 
             # fruitscores=font2.render(str(fruitscore),1,(0,0,0))
             # gameDisplay.blit(fruitscores,(770+fruitscoreshift,13))
 
             # left and right black background patches
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, (350 + 45) * scale_x, 768 * scale_y))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, ((840 + 45) * scale_x, 0, (693 + 45)* scale_x, 768 * scale_y))
 
             pygame.display.update()
             clock.tick(60)

@@ -61,6 +61,10 @@ class scorescreen:
 
         info = pygame.display.Info()
         gameDisplay = pygame.display.get_surface()
+        w, h = gameDisplay.get_width() , gameDisplay.get_height()
+        scale_x = w / 1280.0
+        scale_y = h / 720.0
+
 
         if not(gameDisplay):
 
@@ -68,26 +72,28 @@ class scorescreen:
                 (info.current_w, info.current_h))
 
         replay = pygame.image.load("images/scorescreen/replay.png")
-        replay = pygame.transform.scale(replay, (104, 102))
+        replay = pygame.transform.scale(replay, (int(104 * scale_x), int(102 * scale_y)))
         scoreplate = pygame.image.load("images/scorescreen/scoreplate.png")
-        scoreplate = pygame.transform.scale(scoreplate, (230 + 130, 140 + 80))
+        scoreplate = pygame.transform.scale(scoreplate, (int((230 + 130) * scale_x), int((140 + 80) * scale_y)))
 
         plate = pygame.image.load("images/scoreplate.png").convert()
-        plate = pygame.transform.scale(plate, (340, 90))
+        plate = pygame.transform.scale(plate, (int(340 * scale_x), int(90 * scale_y)))
         plate.set_alpha(220)
 
         home = pygame.image.load("images/scorescreen/home.png")
+        home = pygame.transform.scale(
+                    home, (int(108 * scale_x), int(106 * scale_y)))
         # back=pygame.image.load("screenshot/screenshot.png")
 
         back.convert()
         back.set_alpha(225)
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 50
+        font_size = int(50 * scale_x)
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 30)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(30 * scale_x))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(40 * scale_x))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(20 * scale_x))
 
         down = 1
         bounce = 0
@@ -153,32 +159,31 @@ class scorescreen:
                         down = 1
 
             gameDisplay.fill(white)
-            gameDisplay.blit(back, (350, 0))
+            gameDisplay.blit(back, ((350 + 45) * scale_x, 0))
 
-            gameDisplay.blit(plate, (430, 40))
+            gameDisplay.blit(plate, ((430 + 45) * scale_x, 40 * scale_y))
 
             head1 = font1.render(_("GAME OVER!"), 1, (white))
-            gameDisplay.blit(head1, (440, 50))
+            gameDisplay.blit(head1, ((440 + 45)* scale_x, 50 * scale_y))
 
-            gameDisplay.blit(scoreplate, (420, 200))
+            gameDisplay.blit(scoreplate, ((420 + 45)* scale_x, 200 * scale_y))
 
-            gameDisplay.blit(home, (380 + 60 + 25, 400 + 50))
+            gameDisplay.blit(home, ((380 + 60 + 25 + 45) * scale_x, (400 + 50) * scale_y))
 
-            gameDisplay.blit(replay, (600 + 60 - 25, 400 + 50))
+            gameDisplay.blit(replay, ((600 + 60 - 25 + 45) * scale_x, (400 + 50) * scale_y))
 
             # score check
 
             scores = font2.render(str(score), 1, black)
-            gameDisplay.blit(scores, (575, 250))
+            gameDisplay.blit(scores, ((575 + 45) * scale_x, 250 * scale_y))
 
             maxscores = font2.render(str(maxscore), 1, black)
-            gameDisplay.blit(maxscores, (575, 350))
+            gameDisplay.blit(maxscores, ((575 + 45) * scale_x, 350 * scale_y))
 
             # GAME START
 
-            if home.get_rect(center=(380 + 60 + 52 + 25, 400 + 50 + 51)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    home, (108, 106)), (380 + 60 + 25 - 2, 400 + 50 - 2))
+            if home.get_rect(center=((380 + 60 + 52 + 25 + 45) * scale_x, (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y):
+                gameDisplay.blit(home, ((380 + 60 + 25 - 2 + 45) * scale_x, (400 + 50 - 2) * scale_y))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
@@ -189,17 +194,16 @@ class scorescreen:
 
             # Help menu
 
-            if replay.get_rect(center=(600 + 60 + 52 - 25, 400 + 50 + 51)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(pygame.transform.scale(
-                    replay, (108, 106)), (600 + 60 - 25 - 2, 400 + 50 - 2))
+            if replay.get_rect(center=((600 + 60 + 52 - 25 + 45) * scale_x, (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y):
+                gameDisplay.blit(replay, ((600 + 60 - 25 - 2 + 45) * scale_x, (400 + 50 - 2) * scale_y))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
                     return 1
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, (350 + 45) * scale_x, 768 * scale_y))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, ((840 + 45) * scale_x, 0, (693 + 45) * scale_x, 768 * scale_y))
 
             pygame.display.update()
             clock.tick(60)

@@ -31,7 +31,6 @@ import sys
 from math import *
 from random import *
 
-
 class rulescreen:
 
     def make(self, gameDisplay):
@@ -58,6 +57,9 @@ class rulescreen:
 
         info = pygame.display.Info()
         gameDisplay = pygame.display.get_surface()
+        w, h = gameDisplay.get_width() , gameDisplay.get_height()
+        scale_x = w / 1280.0
+        scale_y = h / 720.0
 
         if not(gameDisplay):
 
@@ -100,11 +102,11 @@ class rulescreen:
                      frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24, frame25]
 
         font_path = "fonts/Arimo.ttf"
-        font_size = 20
+        font_size = int(20 * scale_x)
         font1 = pygame.font.Font(font_path, font_size)
-        font2 = pygame.font.Font("fonts/Arimo.ttf", 30)
-        font3 = pygame.font.Font("fonts/Arimo.ttf", 40)
-        font4 = pygame.font.Font("fonts/Arimo.ttf", 20)
+        font2 = pygame.font.Font("fonts/Arimo.ttf", int(30 * scale_x))
+        font3 = pygame.font.Font("fonts/Arimo.ttf", int(40 * scale_x))
+        font4 = pygame.font.Font("fonts/Arimo.ttf", int(20 * scale_x))
 
         chichi = pygame.mixer.Sound("sound/bird/bonus_trigger_bird.ogg")
         eating_fruit = pygame.mixer.Sound("sound/eating_fruit.ogg")
@@ -144,7 +146,7 @@ class rulescreen:
                     flag1 = flag2 = flag3 = 0
 
             gameDisplay.blit(pygame.transform.scale(
-                framelist[k], (491, 768)), (350, 0))
+                framelist[k], (int(491 * scale_x), int(768 * scale_y))), ((350 + 45) * scale_x, 0))
 
             if(k == 18 and flag1 == 0):
                 chichi.play(0)
@@ -160,19 +162,19 @@ class rulescreen:
 
             head1 = font1.render(
                 "To roll hero upside-down use UP arrow key", 1, (white))
-            gameDisplay.blit(head1, (400, 100))
+            gameDisplay.blit(head1, ((400 + 45)*scale_x, 100*scale_y))
 
-            gameDisplay.blit(button, (540, 140))
+            gameDisplay.blit(button, ((550)*scale_x, 140*scale_y))
 
-            gameDisplay.blit(hide, (400, 600))
-            gameDisplay.blit(play, (500, 600))
+            gameDisplay.blit(hide, ((400 + 45)*scale_x, 600*scale_y))
+            gameDisplay.blit(pygame.transform.scale(
+                    play, (189, 70)), ((500)*scale_x, 600*scale_y))
 
-            if play.get_rect(center=(500 + 92, 600 + 33)).collidepoint(mos_x, mos_y):
+            if play.get_rect(center=((500 + 92)*scale_x, (600 + 33)*scale_y)).collidepoint(mos_x, mos_y):
                 gameDisplay.blit(pygame.transform.scale(
-                    play, (189, 70)), (500 - 2, 600 - 2))
+                    play, (189, 70)), ((500 - 2)*scale_x, (600 - 2)*scale_y))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
-
                     return 0
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -180,9 +182,9 @@ class rulescreen:
 
             # left and right black background patches
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, 350, 768))
+            pygame.draw.rect(gameDisplay, black, (0, 0, (350 + 45)*scale_x, 768*scale_y))
 
-            pygame.draw.rect(gameDisplay, black, (840, 0, 693, 768))
+            pygame.draw.rect(gameDisplay, black, ((839 + 45)*scale_x, 0, 693*scale_x, 768*scale_y))
 
             pygame.display.update()
             clock.tick(60)
