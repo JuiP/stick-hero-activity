@@ -130,10 +130,6 @@ class scorescreen:
                 Gtk.main_iteration()
             for event in pygame.event.get():
                 # totaltime+=timer.tick()
-                if event.type == pygame.KEYDOWN:
-                    # jump.play(0)
-
-                    return 1
                 if event.type == pygame.QUIT:
                     crashed = True
 
