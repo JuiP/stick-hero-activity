@@ -87,9 +87,9 @@ class game:
         hero1 = pygame.image.load("images/hero1.png")
         hero1 = pygame.transform.scale(hero1, (int(27 * scale_x), int(28 * scale_y)))
         hero2 = pygame.image.load("images/hero2.png")
-        hero1 = pygame.transform.scale(hero1, (int(27 * scale_x), int(28 * scale_y)))
+        hero2 = pygame.transform.scale(hero2, (int(27 * scale_x), int(28 * scale_y)))
         hero3 = pygame.image.load("images/hero3.png")
-        hero1 = pygame.transform.scale(hero1, (int(27 * scale_x), int(28 * scale_y)))
+        hero3 = pygame.transform.scale(hero3, (int(27 * scale_x), int(28 * scale_y)))
 
         herodown = pygame.transform.flip(hero, False, True)
         hero1down = pygame.transform.flip(hero1, False, True)
@@ -588,7 +588,7 @@ class game:
 
             if(moveit == 1):  # hero moving right
                 herox += 4 * scale_x
-                heropointer += 4
+                heropointer += 4 * scale_x
                 backx1 -= 1 * scale_x
                 backx2 -= 1 * scale_x
 
