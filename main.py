@@ -1048,7 +1048,7 @@ class game:
                     a = scorescreen()
                     catch = a.make(gameDisplay, back, score, fruitscore)
 
-                    if(catch == 1):
+                    if(catch == 1 or catch ==0):
 
                         # VARIABLE INITIALIZATION
 
