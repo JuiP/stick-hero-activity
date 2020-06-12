@@ -259,7 +259,7 @@ class game:
 
         keyinit = 0
 
-        speed = (8 + 45) * scale_x
+        speed = 8 * scale_x
 
         acc1 = acc2 = acc3 = 0
 
@@ -1100,7 +1100,7 @@ class game:
 
                         ext = 0
 
-                        speed = (8 + 45) * scale_x
+                        speed = 8 * scale_x
 
                         acc1 = acc2 = acc3 = 0
 
