@@ -34,6 +34,8 @@ from sugar3.activity.activity import get_activity_root
 from math import *
 from random import *
 
+SHIFT_CORRECTOR = 45
+
 
 class scorescreen:
 
@@ -61,10 +63,9 @@ class scorescreen:
 
         info = pygame.display.Info()
         gameDisplay = pygame.display.get_surface()
-        w, h = gameDisplay.get_width() , gameDisplay.get_height()
+        w, h = gameDisplay.get_width(), gameDisplay.get_height()
         scale_x = w / 1280.0
         scale_y = h / 720.0
-
 
         if not(gameDisplay):
 
@@ -72,18 +73,21 @@ class scorescreen:
                 (info.current_w, info.current_h))
 
         replay = pygame.image.load("images/scorescreen/replay.png")
-        replay = pygame.transform.scale(replay, (int(104 * scale_x), int(102 * scale_y)))
+        replay = pygame.transform.scale(replay, (int(104 * scale_x),
+                                                 int(102 * scale_y)))
         scoreplate = pygame.image.load("images/scorescreen/scoreplate.png")
-        scoreplate = pygame.transform.scale(scoreplate, (int((230 + 130) * scale_x), int((140 + 80) * scale_y)))
+        scoreplate = pygame.transform.scale(scoreplate,
+                                            (int((230 + 130) * scale_x),
+                                             int((140 + 80) * scale_y)))
 
         plate = pygame.image.load("images/scoreplate.png").convert()
-        plate = pygame.transform.scale(plate, (int(340 * scale_x), int(90 * scale_y)))
+        plate = pygame.transform.scale(plate, (int(340 * scale_x),
+                                               int(90 * scale_y)))
         plate.set_alpha(220)
 
         home = pygame.image.load("images/scorescreen/home.png")
         home = pygame.transform.scale(
-                    home, (int(108 * scale_x), int(106 * scale_y)))
-        # back=pygame.image.load("screenshot/screenshot.png")
+                   home, (int(108 * scale_x), int(106 * scale_y)))
 
         back.convert()
         back.set_alpha(225)
@@ -129,11 +133,8 @@ class scorescreen:
             while Gtk.events_pending():
                 Gtk.main_iteration()
             for event in pygame.event.get():
-                # totaltime+=timer.tick()
                 if event.type == pygame.QUIT:
                     crashed = True
-
-                # event=pygame.event.poll()
 
             mos_x, mos_y = pygame.mouse.get_pos()
 
@@ -155,31 +156,44 @@ class scorescreen:
                         down = 1
 
             gameDisplay.fill(white)
-            gameDisplay.blit(back, ((350 + 45) * scale_x, 0))
+            gameDisplay.blit(back, ((350 + SHIFT_CORRECTOR) * scale_x, 0))
 
-            gameDisplay.blit(plate, ((430 + 45) * scale_x, 40 * scale_y))
+            gameDisplay.blit(plate, ((430 + SHIFT_CORRECTOR) * scale_x,
+                                     40 * scale_y))
 
             head1 = font1.render(_("GAME OVER!"), 1, (white))
-            gameDisplay.blit(head1, ((440 + 45)* scale_x, 50 * scale_y))
+            gameDisplay.blit(head1, ((440 + SHIFT_CORRECTOR)* scale_x,
+                                     50 * scale_y))
 
-            gameDisplay.blit(scoreplate, ((420 + 45)* scale_x, 200 * scale_y))
+            gameDisplay.blit(scoreplate, ((420 + SHIFT_CORRECTOR)* scale_x,
+                                          200 * scale_y))
 
-            gameDisplay.blit(home, ((380 + 60 + 25 + 45) * scale_x, (400 + 50) * scale_y))
+            gameDisplay.blit(home,
+                             ((380 + 60 + 25 + SHIFT_CORRECTOR) * scale_x,
+                              (400 + 50) * scale_y))
 
-            gameDisplay.blit(replay, ((600 + 60 - 25 + 45) * scale_x, (400 + 50) * scale_y))
+            gameDisplay.blit(replay,
+                             ((600 + 60 - 25 + SHIFT_CORRECTOR) * scale_x,
+                              (400 + 50) * scale_y))
 
             # score check
 
             scores = font2.render(str(score), 1, black)
-            gameDisplay.blit(scores, ((575 + 45) * scale_x, 250 * scale_y))
+            gameDisplay.blit(scores, ((575 + SHIFT_CORRECTOR) * scale_x,
+                                      250 * scale_y))
 
             maxscores = font2.render(str(maxscore), 1, black)
-            gameDisplay.blit(maxscores, ((575 + 45) * scale_x, 350 * scale_y))
+            gameDisplay.blit(maxscores, ((575 + SHIFT_CORRECTOR) * scale_x,
+                                         350 * scale_y))
 
             # GAME START
 
-            if home.get_rect(center=((380 + 60 + 52 + 25 + 45) * scale_x, (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(home, ((380 + 60 + 25 - 2 + 45) * scale_x, (400 + 50 - 2) * scale_y))
+            if(home.get_rect(
+               center=((380 + 60 + 52 + 25 + SHIFT_CORRECTOR) * scale_x,
+                       (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y)):
+                gameDisplay.blit(home, ((
+                    380 + 60 + 25 - 2 + SHIFT_CORRECTOR) * scale_x,
+                    (400 + 50 - 2) * scale_y))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
@@ -190,21 +204,31 @@ class scorescreen:
 
             # Help menu
 
-            if replay.get_rect(center=((600 + 60 + 52 - 25 + 45) * scale_x, (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y):
-                gameDisplay.blit(replay, ((600 + 60 - 25 - 2 + 45) * scale_x, (400 + 50 - 2) * scale_y))
+            if(replay.get_rect(
+               center=((600 + 60 + 52 - 25 + SHIFT_CORRECTOR) * scale_x,
+                       (400 + 50 + 51) * scale_y)).collidepoint(mos_x, mos_y)):
+                gameDisplay.blit(replay, ((
+                    600 + 60 - 25 - 2 + SHIFT_CORRECTOR) * scale_x,
+                    (400 + 50 - 2) * scale_y))
 
                 if(pygame.mouse.get_pressed())[0] == 1 and press == 0:
 
                     return 1
 
-            pygame.draw.rect(gameDisplay, black, (0, 0, (350 + 45) * scale_x, 768 * scale_y))
+            pygame.draw.rect(gameDisplay, black,
+                             (0, 0, (350 + SHIFT_CORRECTOR) * scale_x,
+                              768 * scale_y))
 
-            pygame.draw.rect(gameDisplay, black, ((840 + 45) * scale_x, 0, (693 + 45) * scale_x, 768 * scale_y))
+            pygame.draw.rect(gameDisplay, black,
+                             ((840 + SHIFT_CORRECTOR) * scale_x, 0,
+                              (693 + SHIFT_CORRECTOR) * scale_x,
+                              768 * scale_y))
 
             pygame.display.update()
             clock.tick(60)
 
-            if crashed == True:                                   # Game crash or Close check
+            if crashed == True:
+                # Game crash or Close check
                 pygame.quit()
                 sys.exit()
 
